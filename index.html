@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Guincho 24h ResgateJá - Serviço de Guincho e Reboque</title>
+<meta name="description" content="Serviço de guincho e reboque 24 horas. Resposta rápida, frota moderna e atendimento em toda a região. Ligue agora." />
+<meta property="og:title" content="Guincho 24h ResgateJá" />
+<meta property="og:description" content="Guincho e reboque 24h com resposta rápida e segura." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* =================== RESET & TOKENS =================== */
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --primary:#0f1f3d;
+    --primary-light:#1a3361;
+    --primary-foreground:#f8fafc;
+    --accent:#f5a623;
+    --accent-dark:#d4881a;
+    --accent-foreground:#1a1a1a;
+    --bg:#ffffff;
+    --fg:#0f172a;
+    --muted:#f4f6f9;
+    --muted-fg:#64748b;
+    --border:#e5e9ef;
+    --card:#ffffff;
+    --radius:10px;
+    --shadow-sm:0 1px 2px rgba(15,31,61,.06);
+    --shadow:0 4px 16px rgba(15,31,61,.08);
+    --shadow-lg:0 12px 40px rgba(15,31,61,.18);
+  }
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    color:var(--fg);background:var(--bg);
+    line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none}
+  .container{max-width:1200px;margin:0 auto;padding:0 1.25rem}
+
+  /* =================== TOP STRIP =================== */
+  .topbar{background:var(--primary);color:var(--primary-foreground);font-size:.875rem}
+  .topbar .container{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;align-items:center;padding-top:.55rem;padding-bottom:.55rem}
+  .topbar .phone{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;color:var(--primary-foreground)}
+  .topbar .phone:hover{color:var(--accent)}
+  .topbar .clock{display:inline-flex;align-items:center;gap:.5rem;color:#cbd5e1}
+  .topbar svg{color:var(--accent)}
+
+  /* =================== HEADER =================== */
+  .header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+  .header .container{display:flex;align-items:center;justify-content:space-between;padding-top:1rem;padding-bottom:1rem}
+  .logo{display:flex;align-items:center;gap:.65rem}
+  .logo-mark{width:40px;height:40px;border-radius:8px;background:var(--primary);display:flex;align-items:center;justify-content:center;color:var(--accent)}
+  .logo-name{font-weight:800;font-size:1.05rem;line-height:1}
+  .logo-tag{font-size:.72rem;color:var(--muted-fg)}
+  .nav{display:none;gap:2rem}
+  .nav a{font-weight:500;font-size:.92rem;transition:color .2s}
+  .nav a:hover{color:var(--primary)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;border-radius:var(--radius);transition:transform .15s,opacity .15s,background .15s;white-space:nowrap}
+  .btn-primary{background:var(--accent);color:var(--accent-foreground);padding:.7rem 1.1rem;font-size:.9rem;box-shadow:var(--shadow-sm)}
+  .btn-primary:hover{background:var(--accent-dark)}
+  .btn-lg{padding:1rem 1.5rem;font-size:1rem}
+  .btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:2px solid rgba(255,255,255,.3);backdrop-filter:blur(8px)}
+  .btn-ghost:hover{background:rgba(255,255,255,.22)}
+  .header .btn{display:none}
+  .menu-toggle{display:inline-flex;padding:.4rem;border-radius:6px}
+  .mobile-nav{display:none;border-top:1px solid var(--border);background:#fff}
+  .mobile-nav a{display:block;padding:.7rem 1.25rem;font-weight:500;font-size:.95rem;border-bottom:1px solid var(--muted)}
+  .mobile-nav .btn{display:flex;margin:.8rem 1.25rem 1rem}
+  .mobile-nav.open{display:block}
+
+  @media(min-width:768px){
+    .nav,.header .btn{display:inline-flex}
+    .menu-toggle{display:none}
+  }
+
+  /* =================== HERO =================== */
+  .hero{position:relative;overflow:hidden;color:#fff}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .hero-bg img{width:100%;height:100%;object-fit:cover}
+  .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,31,61,.96) 0%,rgba(15,31,61,.82) 45%,rgba(15,31,61,.4) 100%)}
+  .hero .container{position:relative;z-index:1;padding-top:5rem;padding-bottom:5rem}
+  .hero-content{max-width:640px}
+  .badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(245,166,35,.18);color:var(--accent);border:1px solid rgba(245,166,35,.45);padding:.4rem .85rem;border-radius:999px;font-size:.78rem;font-weight:600}
+  .pulse{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .hero h1{font-size:2.4rem;font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-top:1.2rem}
+  .hero h1 .accent{color:var(--accent)}
+  .hero p{font-size:1.05rem;color:#e2e8f0;margin-top:1.1rem;max-width:560px}
+  .hero-cta{display:flex;flex-direction:column;gap:.7rem;margin-top:2rem}
+  .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.2);max-width:420px}
+  .hero-stats .num{font-size:1.6rem;font-weight:800;color:var(--accent)}
+  .hero-stats .lbl{font-size:.72rem;color:#cbd5e1}
+
+  @media(min-width:640px){
+    .hero-cta{flex-direction:row}
+  }
+  @media(min-width:768px){
+    .hero .container{padding-top:7rem;padding-bottom:7rem}
+    .hero h1{font-size:3.5rem}
+    .hero p{font-size:1.2rem}
+    .hero-stats .num{font-size:2rem}
+  }
+
+  /* =================== SECTIONS COMMON =================== */
+  section.block{padding:5rem 0}
+  @media(min-width:768px){section.block{padding:7rem 0}}
+  .eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-dark)}
+  .h2{font-size:1.85rem;font-weight:800;line-height:1.2;letter-spacing:-.02em;margin-top:.5rem}
+  @media(min-width:768px){.h2{font-size:2.4rem}}
+  .lead{color:var(--muted-fg);margin-top:1rem;max-width:640px}
+  .section-head{text-align:center;max-width:680px;margin:0 auto}
+  .section-head .lead{margin-left:auto;margin-right:auto}
+
+  /* =================== SERVICES =================== */
+  .grid{display:grid;gap:1.25rem}
+  .grid-3{grid-template-columns:1fr}
+  @media(min-width:640px){.grid-3{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1024px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+  .service{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.6rem;transition:border-color .2s,box-shadow .2s,transform .2s}
+  .service:hover{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-2px)}
+  .icon-box{width:48px;height:48px;border-radius:10px;background:var(--primary);color:var(--accent);display:flex;align-items:center;justify-content:center}
+  .service h3{font-size:1.1rem;font-weight:700;margin-top:1.1rem}
+  .service p{font-size:.92rem;color:var(--muted-fg);margin-top:.5rem}
+  .services-grid{margin-top:3rem}
+
+  /* =================== WHY =================== */
+  .why{background:var(--muted)}
+  .why-grid{display:grid;gap:3rem;align-items:center}
+  @media(min-width:1024px){.why-grid{grid-template-columns:1fr 1fr}}
+  .check-list{margin-top:1.4rem;display:grid;gap:.8rem}
+  .check-list li{display:flex;gap:.7rem;align-items:flex-start;list-style:none;font-size:.95rem}
+  .check-list svg{flex-shrink:0;margin-top:.15rem;color:var(--accent-dark)}
+  .reasons{display:grid;grid-template-columns:1fr;gap:1rem}
+  @media(min-width:640px){.reasons{grid-template-columns:repeat(2,1fr)}}
+  .reason{background:var(--card);padding:1.5rem;border-radius:14px;box-shadow:var(--shadow-sm)}
+  .reason .icon-box{background:rgba(245,166,35,.18);color:var(--primary);width:44px;height:44px}
+  .reason h3{font-size:1rem;font-weight:700;margin-top:1rem}
+  .reason p{font-size:.88rem;color:var(--muted-fg);margin-top:.35rem}
+
+  /* =================== COVERAGE =================== */
+  .coverage-grid{display:grid;gap:2.5rem;align-items:center}
+  @media(min-width:1024px){.coverage-grid{grid-template-columns:1fr 1fr}}
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem}
+  .chip{display:inline-flex;align-items:center;gap:.35rem;background:var(--muted);padding:.4rem .75rem;border-radius:999px;font-size:.78rem;font-weight:500}
+  .chip svg{color:var(--accent-dark)}
+  .map-frame{overflow:hidden;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow)}
+  .map-frame iframe{width:100%;height:400px;border:0;display:block}
+
+  /* =================== TESTIMONIALS =================== */
+  .testimonials{background:var(--muted)}
+  .testimonial{background:var(--card);padding:1.6rem;border-radius:14px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column}
+  .stars{display:flex;gap:2px;color:var(--accent)}
+  .testimonial p{font-size:.92rem;margin-top:1rem;flex:1}
+  .author{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border)}
+  .author .name{font-weight:600}
+  .author .role{font-size:.78rem;color:var(--muted-fg)}
+
+  /* =================== CONTACT =================== */
+  .contact-grid{display:grid;gap:2.5rem}
+  @media(min-width:1024px){.contact-grid{grid-template-columns:1fr 1fr}}
+  .contact-cards{display:grid;gap:.85rem;margin-top:2rem}
+  .contact-card{display:flex;align-items:center;gap:1rem;padding:1rem;border:1px solid var(--border);border-radius:14px;transition:border-color .2s}
+  a.contact-card:hover{border-color:var(--accent)}
+  .contact-card .icon-box{width:48px;height:48px}
+  .contact-card .lbl{font-size:.75rem;color:var(--muted-fg)}
+  .contact-card .val{font-weight:600}
+  form{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.8rem;box-shadow:var(--shadow-sm)}
+  form h3{font-size:1.25rem;font-weight:700}
+  form .hint{font-size:.85rem;color:var(--muted-fg);margin-top:.25rem}
+  .field{margin-top:1rem}
+  .field label{display:block;font-size:.85rem;font-weight:500;margin-bottom:.35rem}
+  .field input,.field textarea{width:100%;padding:.7rem .8rem;border:1px solid var(--border);border-radius:8px;background:#fff;font-size:.92rem;font-family:inherit;transition:border-color .15s,box-shadow .15s;outline:none}
+  .field input:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(245,166,35,.2)}
+  .field textarea{resize:vertical;min-height:90px}
+  form .btn-primary{width:100%;margin-top:1.4rem;padding:1rem;font-size:1rem}
+  .sent-msg{margin-top:.8rem;font-size:.85rem;color:var(--muted-fg);text-align:center;display:none}
+  .sent-msg.show{display:block}
+
+  /* =================== FOOTER =================== */
+  footer{background:var(--primary);color:var(--primary-foreground)}
+  footer .container{padding-top:3rem;padding-bottom:3rem}
+  .foot-grid{display:grid;gap:2rem}
+  @media(min-width:768px){.foot-grid{grid-template-columns:repeat(3,1fr)}}
+  footer h4{font-weight:600;margin-bottom:1rem}
+  footer ul{list-style:none;display:grid;gap:.55rem;font-size:.9rem;color:#cbd5e1}
+  footer ul li{display:flex;align-items:center;gap:.5rem}
+  footer ul a:hover{color:var(--accent)}
+  footer svg{color:var(--accent)}
+  .copyright{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.18);text-align:center;font-size:.78rem;color:#94a3b8}
+
+  /* =================== FLOATING WHATSAPP =================== */
+  .float-wa{position:fixed;bottom:1.5rem;right:1.5rem;z-index:60;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(37,211,102,.45);transition:transform .15s}
+  .float-wa:hover{transform:scale(1.08)}
+</style>
+</head>
+<body>
+
+<!-- Top strip -->
+<div class="topbar">
+  <div class="container">
+    <span class="clock">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Atendimento 24 horas, todos os dias
+    </span>
+    <a class="phone" href="tel:+5511999990000">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+      (11) 9 9999-0000
+    </a>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="container">
+    <a href="#top" class="logo">
+      <span class="logo-mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/><path d="M14 17h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+      </span>
+      <span>
+        <span class="logo-name">ResgateJá</span><br>
+        <span class="logo-tag">Guincho &amp; Reboque 24h</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="#servicos">Serviços</a>
+      <a href="#diferenciais">Diferenciais</a>
+      <a href="#cobertura">Cobertura</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a href="tel:+5511999990000" class="btn btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+      Ligue Agora
+    </a>
+    <button class="menu-toggle" id="menuBtn" aria-label="Abrir menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#servicos">Serviços</a>
+    <a href="#diferenciais">Diferenciais</a>
+    <a href="#cobertura">Cobertura</a>
+    <a href="#depoimentos">Depoimentos</a>
+    <a href="#contato">Contato</a>
+    <a href="tel:+5511999990000" class="btn btn-primary">Ligue Agora</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <img src="hero-tow.jpg" alt="Guincho atendendo veículo na rua" width="1920" height="1080">
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <span class="badge"><span class="pulse"></span> Disponível 24h • Atendimento Imediato</span>
+      <h1>Serviço de Guincho 24h.<br><span class="accent">Resposta Rápida</span> e Confiável.</h1>
+      <p>Pane, acidente ou transporte programado? Nossa equipe chega rápido, cuida do seu veículo com segurança e te tira do aperto a qualquer hora.</p>
+      <div class="hero-cta">
+        <a href="tel:+5511999990000" class="btn btn-primary btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+          Solicitar Guincho Agora
+        </a>
+        <a href="https://wa.me/5511999990000" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          Falar no WhatsApp
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="num">+15</div><div class="lbl">Anos de estrada</div></div>
+        <div><div class="num">30min</div><div class="lbl">Tempo médio</div></div>
+        <div><div class="num">24/7</div><div class="lbl">Sempre online</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="block" id="servicos">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Nossos serviços</span>
+      <h2 class="h2">Soluções completas em guincho e reboque</h2>
+      <p class="lead">Da pane na esquina ao transporte entre estados, temos o equipamento certo para o seu veículo.</p>
+    </div>
+    <div class="grid grid-3 services-grid">
+      <div class="service">
+        <div class="icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg></div>
+        <h3>Guincho Leve</h3>
+        <p>Para carros de passeio, SUVs e utilitários. Plataforma com içamento seguro.</p>
+      </div>
+      <div class="service">
+        <div class="icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div>
+        <h3>Guincho Pesado</h3>
+        <p>Caminhões, ônibus e veículos de grande porte com equipamentos especializados.</p>
+      </div>
+      <div class="service">
+        <div class="icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></div>
+        <h3>Longa Distância</h3>
+        <p>Transporte entre cidades e estados, com rastreamento e seguro de carga.</p>
+      </div>
+      <div class="service">
+        <div class="icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5V14l-3-3 4-3 2 3h2"/></svg></div>
+        <h3>Reboque de Motos</h3>
+        <p>Transporte específico para motocicletas com fixação segura e cobertura.</p>
+      </div>
+      <div class="service">
+        <div class="icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3>Pane Mecânica</h3>
+        <p>Atendimento emergencial em panes, falhas elétricas e pneus furados.</p>
+      </div>
+      <div class="service">
+        <div class="icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Resgate em Acidentes</h3>
+        <p>Remoção rápida e segura em colisões, com equipe treinada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Us -->
+<section class="block why" id="diferenciais">
+  <div class="container">
+    <div class="why-grid">
+      <div>
+        <span class="eyebrow">Por que nos escolher</span>
+        <h2 class="h2">Confiança que move você de volta para casa</h2>
+        <p class="lead">Mais de 15 anos atendendo motoristas, frotas e seguradoras com o mesmo compromisso: chegar rápido, agir com segurança e tratar seu veículo como se fosse o nosso.</p>
+        <ul class="check-list">
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Orçamento transparente, sem surpresas</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Cobertura ampla na Grande SP e estradas</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Suporte 24h por telefone e WhatsApp</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Veículos rastreados em tempo real</li>
+        </ul>
+      </div>
+      <div class="reasons">
+        <div class="reason">
+          <div class="icon-box"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg></div>
+          <h3>Resposta em até 30 min</h3>
+          <p>Equipes de plantão prontas para sair assim que você liga.</p>
+        </div>
+        <div class="reason">
+          <div class="icon-box"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div>
+          <h3>Frota Moderna</h3>
+          <p>Guinchos plataforma e asa-delta com manutenção em dia.</p>
+        </div>
+        <div class="reason">
+          <div class="icon-box"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Motoristas Treinados</h3>
+          <p>Profissionais experientes e habilitados em transporte de cargas.</p>
+        </div>
+        <div class="reason">
+          <div class="icon-box"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Atendimento Seguro</h3>
+          <p>Veículo coberto por seguro durante todo o transporte.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Coverage -->
+<section class="block" id="cobertura">
+  <div class="container">
+    <div class="coverage-grid">
+      <div>
+        <span class="eyebrow">Cobertura</span>
+        <h2 class="h2">Atendemos toda a Grande São Paulo</h2>
+        <p class="lead">Atuamos na capital, ABC, região oeste e em rodovias. Para outras cidades e transporte de longa distância, consulte disponibilidade.</p>
+        <div class="chips">
+          <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> São Paulo</span>
+          <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Guarulhos</span>
+          <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Osasco</span>
+          <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Santo André</span>
+          <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> São Bernardo</span>
+          <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Diadema</span>
+          <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Barueri</span>
+          <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Cotia</span>
+          <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Mauá</span>
+          <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Taboão da Serra</span>
+          <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Carapicuíba</span>
+          <span class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Embu</span>
+        </div>
+      </div>
+      <div class="map-frame">
+        <iframe title="Mapa de cobertura" src="https://www.google.com/maps?q=São+Paulo,+SP&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="block testimonials" id="depoimentos">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Depoimentos</span>
+      <h2 class="h2">Quem usa, recomenda</h2>
+    </div>
+    <div class="grid grid-3" style="margin-top:3rem">
+      <div class="testimonial">
+        <div class="stars">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p>"Tive uma pane às 2h da manhã na marginal e o guincho chegou em 25 minutos. Atendimento super profissional."</p>
+        <div class="author"><div class="name">Marcos R.</div><div class="role">Motorista de aplicativo</div></div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p>"Atendimento excelente, preço justo e o motorista cuidou do meu carro com muito zelo. Recomendo demais."</p>
+        <div class="author"><div class="name">Juliana S.</div><div class="role">Cliente particular</div></div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p>"Trabalhamos com a ResgateJá há mais de 2 anos. Pontualidade e segurança em todos os atendimentos."</p>
+        <div class="author"><div class="name">Carlos M.</div><div class="role">Gerente de frota</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="block" id="contato">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <span class="eyebrow">Fale conosco</span>
+        <h2 class="h2">Precisa de guincho? Estamos a um clique.</h2>
+        <p class="lead">Envie seus dados e te chamamos no WhatsApp, ou ligue direto para nossa central 24h.</p>
+        <div class="contact-cards">
+          <a class="contact-card" href="tel:+5511999990000">
+            <span class="icon-box"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg></span>
+            <div><div class="lbl">Central 24 horas</div><div class="val">(11) 9 9999-0000</div></div>
+          </a>
+          <a class="contact-card" href="https://wa.me/5511999990000" target="_blank" rel="noopener">
+            <span class="icon-box"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+            <div><div class="lbl">WhatsApp</div><div class="val">Resposta em minutos</div></div>
+          </a>
+          <div class="contact-card">
+            <span class="icon-box"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+            <div><div class="lbl">E-mail</div><div class="val">contato@resgateja.com.br</div></div>
+          </div>
+          <div class="contact-card">
+            <span class="icon-box"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+            <div><div class="lbl">Horário</div><div class="val">Aberto 24h, 7 dias por semana</div></div>
+          </div>
+        </div>
+      </div>
+
+      <form id="contactForm">
+        <h3>Solicitar atendimento</h3>
+        <p class="hint">Preencha e seguimos a conversa no WhatsApp.</p>
+        <div class="field"><label for="nome">Nome</label><input id="nome" required></div>
+        <div class="field"><label for="tel">Telefone</label><input id="tel" type="tel" required></div>
+        <div class="field"><label for="local">Local do veículo</label><input id="local" placeholder="Rua, bairro, cidade ou km da rodovia" required></div>
+        <div class="field"><label for="msg">Detalhes (opcional)</label><textarea id="msg" rows="3" placeholder="Modelo do veículo, tipo de problema, destino..."></textarea></div>
+        <button type="submit" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          Enviar pelo WhatsApp
+        </button>
+        <p class="sent-msg" id="sentMsg">Abrimos o WhatsApp em outra aba. Se não abriu, verifique o bloqueador de pop-ups.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="logo">
+          <span class="logo-mark" style="background:var(--accent);color:var(--primary)">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+          </span>
+          <span class="logo-name" style="color:#fff">ResgateJá</span>
+        </div>
+        <p style="margin-top:1rem;font-size:.9rem;color:#cbd5e1;max-width:300px">Guincho e reboque 24h com atendimento rápido, seguro e profissional em toda a Grande São Paulo.</p>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg> (11) 9 9999-0000</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> contato@resgateja.com.br</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Aberto 24h</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#diferenciais">Diferenciais</a></li>
+          <li><a href="#cobertura">Cobertura</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">© <span id="year"></span> ResgateJá Guincho &amp; Reboque. Todos os direitos reservados.</div>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/5511999990000" target="_blank" rel="noopener" class="float-wa" aria-label="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+</a>
+
+<script>
+  // Mobile menu toggle
+  const btn = document.getElementById('menuBtn');
+  const nav = document.getElementById('mobileNav');
+  if (btn) btn.addEventListener('click', () => nav.classList.toggle('open'));
+  document.querySelectorAll('#mobileNav a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Contact form -> WhatsApp
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = document.getElementById('nome').value;
+    const tel = document.getElementById('tel').value;
+    const local = document.getElementById('local').value;
+    const msg = document.getElementById('msg').value;
+    const text = `Olá! Preciso de guincho.%0A*Nome:* ${nome}%0A*Telefone:* ${tel}%0A*Local:* ${local}%0A*Detalhes:* ${msg}`;
+    window.open(`https://wa.me/5511999990000?text=${text}`, '_blank');
+    document.getElementById('sentMsg').classList.add('show');
+  });
+</script>
+</body>
+</html>
